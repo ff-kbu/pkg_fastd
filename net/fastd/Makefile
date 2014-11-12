@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fastd
-PKG_VERSION:=14
+PKG_VERSION:=15
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Matthias Schiffer <mschiffer@universe-factory.net>
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
-PKG_SOURCE_URL:=https://projects.universe-factory.net/attachments/download/75
-PKG_MD5SUM:=34f6bdebd0410a1fba7c8fd06fff7a05
+PKG_SOURCE_URL:=https://projects.universe-factory.net/attachments/download/77
+PKG_MD5SUM:=31763188a7fc35d22fd506e406f8c37c
 
 PKG_CONFIG_DEPENDS:=\
 	CONFIG_FASTD_ENABLE_METHOD_CIPHER_TEST \
@@ -74,6 +74,7 @@ CMAKE_OPTIONS += \
 	-DWITH_CMDLINE_OPERATION:BOOL=FALSE \
 	-DWITH_CMDLINE_COMMANDS:BOOL=FALSE \
 	-DWITH_VERIFY:BOOL=FALSE \
+	-DWITH_STATUS_SOCKET:BOOL=FALSE \
 	-DWITH_CAPABILITIES:BOOL=FALSE \
 	-DENABLE_SYSTEMD:BOOL=FALSE \
 	-DENABLE_LIBSODIUM:BOOL=FALSE \
@@ -161,9 +162,9 @@ define Package/fastd/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/fastd $(1)/usr/bin/
 
 	$(INSTALL_DIR) $(1)/etc/init.d/
-	$(INSTALL_BIN) files/fastd.init $(1)/etc/init.d/fastd
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/doc/examples/openwrt/fastd.init $(1)/etc/init.d/fastd
 	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) files/fastd.config $(1)/etc/config/fastd
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/doc/examples/openwrt/fastd.config $(1)/etc/config/fastd
 	$(INSTALL_DIR) $(1)/etc/fastd
 	$(INSTALL_DIR) $(1)/lib/upgrade/keep.d
 	$(INSTALL_DATA) files/fastd.upgrade $(1)/lib/upgrade/keep.d/fastd
